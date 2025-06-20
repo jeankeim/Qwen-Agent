@@ -18,11 +18,16 @@ from qwen_agent.gui import WebUI
 
 def test():
     bot = Assistant(
-        llm={
-            'model_type': 'qwenomni_oai',
-            'model': 'qwen-omni-turbo-latest',
-            'base_url': 'https://dashscope.aliyuncs.com/compatible-mode/v1'
-        })
+        # llm={
+        #     'model_type': 'qwenomni_oai',
+        #     'model': 'qwen-omni-turbo-latest',
+        #     'base_url': 'https://dashscope.aliyuncs.com/compatible-mode/v1'
+        # }
+        llm={'model':'qwen3:8b', 
+             'model_server': 'http://localhost:11434/v1',  #base_url，也称为 api_base
+             'api_key':''}
+        
+        )
     messages = [{
         'role':
             'user',
@@ -51,11 +56,14 @@ def test():
 def app_gui():
     # Define the agent
     bot = Assistant(
-        llm={
-            'model_type': 'qwenomni_oai',
-            'model': 'qwen-omni-turbo-latest',
-            'base_url': 'https://dashscope.aliyuncs.com/compatible-mode/v1'
-        },
+        # llm={
+        #     'model_type': 'qwenomni_oai',
+        #     'model': 'qwen-omni-turbo-latest',
+        #     'base_url': 'https://dashscope.aliyuncs.com/compatible-mode/v1'
+        # },
+         llm={'model':'qwen3:8b', 
+             'model_server': 'http://localhost:11434/v1',  #base_url，也称为 api_base
+             'api_key':''},
         name='Qwen Omni',
         description='Support audio, video, image, and text input!',
     )

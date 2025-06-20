@@ -26,15 +26,19 @@ ROOT_RESOURCE = os.path.join(os.path.dirname(__file__), 'resource')
 
 def init_agent_service():
     llm_cfg = {'model': 'qwen-max'}
+    llm_cfg={'model':'qwen3:8b', 
+             'model_server': 'http://localhost:11434/v1',  #base_url，也称为 api_base
+             'api_key':''}
     system = ('你扮演一个数据库助手，你具有查询数据库的能力')
     tools = [{
-        "mcpServers": {
-            "sqlite" : {
-                "command": "uvx",
-                "args": [
-                    "mcp-server-sqlite",
-                    "--db-path",
-                    "test.db"
+        'name': 'sqlite',
+        'mcpServers': {
+            'sqlite': {
+                'command': 'uvx',
+                'args': [
+                    'mcp-server-sqlite',
+                    '--db-path',
+                    'test.db'
                 ]
             }
         }
@@ -48,7 +52,6 @@ def init_agent_service():
     )
 
     return bot
-
 
 def test(query='数据库里有几张表', file: Optional[str] = os.path.join(ROOT_RESOURCE, 'poem.pdf')):
     # Define the agent

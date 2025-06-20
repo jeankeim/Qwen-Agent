@@ -18,19 +18,58 @@ import os  # noqa
 from qwen_agent.agents import Assistant
 from qwen_agent.gui import WebUI
 from qwen_agent.utils.output_beautify import typewriter_print
+from typing import List
+
+# from qwen_agent.llm.schema import ASSISTANT, FUNCTION
+
+# TOOL_CALL_S = '[TOOL_CALL]'
+# TOOL_CALL_E = ''
+# TOOL_RESULT_S = '[TOOL_RESPONSE]'
+# TOOL_RESULT_E = ''
+# THOUGHT_S = '[THINK]'
+
+
+# def typewriter_print(messages: List[dict], text: str) -> str:
+#     full_text = ''
+#     content = []
+#     for msg in messages:
+#         if msg['role'] == ASSISTANT:
+#             if msg.get('reasoning_content'):
+#                 assert isinstance(msg['reasoning_content'], str), 'Now only supports text messages'
+#                 content.append(f'{THOUGHT_S}\n{msg["reasoning_content"]}')
+#             if msg.get('content'):
+#                 assert isinstance(msg['content'], str), 'Now only supports text messages'
+#                 content.append(msg['content'])
+#             if msg.get('function_call'):
+#                 content.append(f'{TOOL_CALL_S} {msg["function_call"]["name"]}\n{msg["function_call"]["arguments"]}')
+#         elif msg['role'] == FUNCTION:
+#             content.append(f'{TOOL_RESULT_S} {msg["name"]}\n{msg["content"]}')
+#         else:
+#             raise TypeError
+#     if content:
+#         full_text = '\n'.join(content)
+#         print(full_text[len(text):], end='', flush=True)
+
+#     return full_text
+
+
 
 
 def init_agent_service():
-    llm_cfg = {
-        # Use the model service provided by DashScope:
-        'model': 'qwen3-235b-a22b',
-        'model_type': 'qwen_dashscope',
+    # llm_cfg = {
+    #     # Use the model service provided by DashScope:
+    #     'model': 'qwen3-235b-a22b',
+    #     'model_type': 'qwen_dashscope',
 
         # 'generate_cfg': {
         #     # When using the Dash Scope API, pass the parameter of whether to enable thinking mode in this way
         #     'enable_thinking': False,
         # },
-    }
+    # }
+
+    llm_cfg={'model':'qwen3:8b', 
+             'model_server': 'http://localhost:11434/v1',  #base_url，也称为 api_base
+             'api_key':''}
     # llm_cfg = {
     #     # Use the OpenAI-compatible model service provided by DashScope:
     #     'model': 'qwen3-235b-a22b',
@@ -74,8 +113,7 @@ def init_agent_service():
                     'args': ['mcp-server-fetch']
                 }
             }
-        },
-        'code_interpreter',  # Built-in tools
+        }
     ]
     bot = Assistant(llm=llm_cfg,
                     function_list=tools,

@@ -17,7 +17,10 @@ from qwen_agent.gui import WebUI
 
 
 def test():
-    bot = Assistant(llm={'model_type': 'qwenaudio_dashscope', 'model': 'qwen-audio-turbo-latest'})
+    llm_cfg={'model':'qwen3:8b', 
+             'model_server': 'http://localhost:11434/v1',  #base_url，也称为 api_base
+             'api_key':''}
+    bot = Assistant(llm=llm_cfg)
     messages = [{
         'role':
             'user',
@@ -33,7 +36,10 @@ def test():
 
 def app_gui():
     # Define the agent
-    bot = Assistant(llm={'model': 'qwen-audio-turbo-latest'})
+    llm_cfg={'model':'qwen3:8b', 
+             'model_server': 'http://localhost:11434/v1',  #base_url，也称为 api_base
+             'api_key':''}
+    bot = Assistant(llm=llm_cfg)
     WebUI(bot).run()
 
 

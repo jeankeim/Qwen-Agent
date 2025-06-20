@@ -15,6 +15,10 @@
 from qwen_agent.agents import Assistant
 from qwen_agent.gui import WebUI
 
+llm_cfg={'model':'qwen3:8b', 
+             'model_server': 'http://localhost:11434/v1',  #base_url，也称为 api_base
+             'api_key':''}
+
 
 def test():
     bot = Assistant(llm={'model': 'qwen-plus-latest'})
@@ -25,7 +29,7 @@ def test():
 
 def app_gui():
     # Define the agent
-    bot = Assistant(llm={'model': 'qwen-plus-latest'},
+    bot = Assistant(llm=llm_cfg,
                     name='Assistant',
                     description='使用RAG检索并回答，支持文件类型：PDF/Word/PPT/TXT/HTML。')
     chatbot_config = {

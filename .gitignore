@@ -43,3 +43,7 @@ test/*
 tests/env.sh
 examples/data/*
 test.db
+
+examples/example_document.md
+examples/scores.csv
+venv/

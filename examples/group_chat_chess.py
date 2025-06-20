@@ -17,11 +17,15 @@
 from qwen_agent.agents import GroupChat
 from qwen_agent.gui import WebUI
 from qwen_agent.llm.schema import Message
+import os
+os.environ['DASHSCOPE_API_KEY'] = 'sk-bf3b85aeebd94405970e02106e3f6481'
+
 
 # Define a configuration file for a multi-agent:
 # one real player, one NPC player, and one chessboard
 NPC_NAME = '小明'
 USER_NAME = '小塘'
+
 CFGS = {
     'background':
         f'一个五子棋群组，棋盘为5*5，黑棋玩家和白棋玩家交替下棋，每次玩家下棋后，棋盘进行更新并展示。{NPC_NAME}下白棋，{USER_NAME}下黑棋。',
@@ -51,9 +55,12 @@ CFGS = {
     ],
 }
 
-
+llm_cfg={'model':'qwen3:8b', 
+             'model_server': 'http://localhost:11434/v1',  #base_url，也称为 api_base
+             'api_key': ''}
+# llm={'model':'qwen-plus-latest'}
 def test(query: str = '<1,1>'):
-    bot = GroupChat(agents=CFGS, llm={'model': 'qwen-max'})
+    bot = GroupChat(agents=CFGS, llm=llm_cfg)
 
     messages = [Message('user', query, name=USER_NAME)]
     for response in bot.run(messages=messages):
@@ -62,7 +69,7 @@ def test(query: str = '<1,1>'):
 
 def app_tui():
     # Define a group chat agent from the CFGS
-    bot = GroupChat(agents=CFGS, llm={'model': 'qwen-max'})
+    bot = GroupChat(agents=CFGS, llm=llm_cfg)
     # Chat
     messages = []
     while True:
@@ -76,7 +83,7 @@ def app_tui():
 
 def app_gui():
     # Define a group chat agent from the CFGS
-    bot = GroupChat(agents=CFGS, llm={'model': 'qwen-max'})
+    bot = GroupChat(agents=CFGS, llm=llm_cfg)
     chatbot_config = {
         'user.name': '小塘',
         'prompt.suggestions': [

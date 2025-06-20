@@ -21,7 +21,8 @@ from qwen_agent.agents import GroupChat, GroupChatCreator
 from qwen_agent.agents.user_agent import PENDING_USER_INPUT
 from qwen_agent.gui.gradio_dep import gr, mgr, ms
 from qwen_agent.llm.schema import ContentItem, Message
-
+import os
+os.environ['DASHSCOPE_API_KEY'] = 'sk-bf3b85aeebd94405970e02106e3f6481'
 
 def init_agent_service(cfgs):
     llm_cfg = {'model': 'qwen-max'}

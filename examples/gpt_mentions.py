@@ -21,6 +21,9 @@ from qwen_agent.gui import WebUI
 
 def init_agent_service():
     llm_cfg = {'model': 'qwen-max'}
+    llm_cfg={'model':'qwen3:8b', 
+             'model_server': 'http://localhost:11434/v1',  #base_url，也称为 api_base
+             'api_key': ''}
 
     react_chat_agent = ReActChat(
         llm=llm_cfg,

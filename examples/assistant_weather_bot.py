@@ -24,7 +24,10 @@ ROOT_RESOURCE = os.path.join(os.path.dirname(__file__), 'resource')
 
 
 def init_agent_service():
-    llm_cfg = {'model': 'qwen-max'}
+    # llm_cfg = {'model': 'qwen-max'}
+    llm_cfg={'model':'qwen3:8b', 
+             'model_server': 'http://localhost:11434/v1',  #base_url，也称为 api_base
+             'api_key':''}
     system = ('你扮演一个天气预报助手，你具有查询天气和画图能力。'
               '你需要查询相应地区的天气，然后调用给你的画图工具绘制一张城市的图，并从给定的诗词文档中选一首相关的诗词来描述天气，不要说文档以外的诗词。')
 

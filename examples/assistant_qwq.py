@@ -20,23 +20,63 @@ from qwen_agent.agents import Assistant
 from qwen_agent.gui import WebUI
 from qwen_agent.utils.output_beautify import typewriter_print
 
+
+# from typing import List
+
+# from qwen_agent.llm.schema import ASSISTANT, FUNCTION
+
+# TOOL_CALL_S = '[TOOL_CALL]'
+# TOOL_CALL_E = ''
+# TOOL_RESULT_S = '[TOOL_RESPONSE]'
+# TOOL_RESULT_E = ''
+# THOUGHT_S = '[THINK]'
+
+
+# def typewriter_print(messages: List[dict], text: str) -> str:
+#     full_text = ''
+#     content = []
+#     for msg in messages:
+#         if msg['role'] == ASSISTANT:
+#             if msg.get('reasoning_content'):
+#                 assert isinstance(msg['reasoning_content'], str), 'Now only supports text messages'
+#                 content.append(f'{THOUGHT_S}\n{msg["reasoning_content"]}')
+#             if msg.get('content'):
+#                 assert isinstance(msg['content'], str), 'Now only supports text messages'
+#                 content.append(msg['content'])
+#             if msg.get('function_call'):
+#                 content.append(f'{TOOL_CALL_S} {msg["function_call"]["name"]}\n{msg["function_call"]["arguments"]}')
+#         elif msg['role'] == FUNCTION:
+#             content.append(f'{TOOL_RESULT_S} {msg["name"]}\n{msg["content"]}')
+#         else:
+#             raise TypeError
+#     if content:
+#         full_text = '\n'.join(content)
+#         print(full_text[len(text):], end='', flush=True)
+
+#     return full_text
+
 ROOT_RESOURCE = os.path.join(os.path.dirname(__file__), 'resource')
 
 
 def init_agent_service():
-    llm_cfg = {
-        'model': 'qwq-32b',
-        'model_type': 'qwen_dashscope',
-        'generate_cfg': {
-            'fncall_prompt_type': 'nous',
+    # llm_cfg = {
+    #     'model': 'qwq-32b',
+    #     'model_type': 'qwen_dashscope',
+    #     'generate_cfg': {
+    #         'fncall_prompt_type': 'nous',
 
-            # This parameter needs to be passed in when the deployed model is an reasoning model (e.g. qwq-32b) and *does not* support the reasoning_content field (e.g. deploying qwq-32b directly with an old version of vLLM)
-            # Add: When the content is `<think>this is the thought</think>this is the answer`
-            # Do not add: When the response has been separated by reasoning_content and content
-            # This parameter will affect the parsing strategy of tool call
-            # 'thought_in_content': True,
-        },
-    }
+    #         # This parameter needs to be passed in when the deployed model is an reasoning model (e.g. qwq-32b) and *does not* support the reasoning_content field (e.g. deploying qwq-32b directly with an old version of vLLM)
+    #         # Add: When the content is `<think>this is the thought</think>this is the answer`
+    #         # Do not add: When the response has been separated by reasoning_content and content
+    #         # This parameter will affect the parsing strategy of tool call
+    #         # 'thought_in_content': True,
+    #     },
+    # }
+
+    llm_cfg={'model':'qwen3:8b', 
+             'model_server': 'http://localhost:11434/v1',  #base_url，也称为 api_base
+             'api_key':''}
+
     tools = [
         'image_gen',
         # 'web_search',  # Apply for an apikey here (https://serper.dev) and set it as an environment variable by `export SERPER_API_KEY=xxxxxx`
