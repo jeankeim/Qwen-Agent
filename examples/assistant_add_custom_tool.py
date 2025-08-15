@@ -48,17 +48,21 @@ class MyImageGen(BaseTool):
 
 
 def init_agent_service():
-    llm_cfg = {'model': 'qwen-max'}
+    # llm_cfg = {'model': 'qwen3-32b','model_server': 'dashscope','api_key': 'sk-bf3b85aeebd94405970e02106e3f6481'}# **fill your api key here**}
     llm_cfg={'model':'qwen3:8b', 
              'model_server': 'http://localhost:11434/v1',  #base_url，也称为 api_base
              'api_key': ''}
+    
+
+     
     system = ("According to the user's request, you first draw a picture and then automatically "
               'run code to download the picture and select an image operation from the given document '
               'to process the image')
 
     tools = [
-        'my_image_gen',
+        'image_gen',
         'code_interpreter',
+        'web_extractor'
     ]  # code_interpreter is a built-in tool in Qwen-Agent
     bot = Assistant(
         llm=llm_cfg,
